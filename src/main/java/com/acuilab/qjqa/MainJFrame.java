@@ -36,6 +36,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
+ * 20190727
+ *  1 增加模拟器分辨率有960*540改为1280*540
+ *  2 图像识别改为高精度
+ * 
  *
  * @author admin
  */
