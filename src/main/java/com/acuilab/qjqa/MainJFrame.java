@@ -168,17 +168,17 @@ public class MainJFrame extends javax.swing.JFrame {
                     }
                     
                     String question = sb.toString();
-                    if(StringUtils.equals(prevQuestion, question)) {
-                        // 相同题目，忽略
-                        SwingUtilities.invokeLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    logTextArea.append("题干：相同题目，忽略\n");
-                                    logTextArea.append("————————————————————————————\n");
-                                }
-                        });
-                        return;
-                    }
+//                    if(StringUtils.equals(prevQuestion, question)) {
+//                        // 相同题目，忽略
+//                        SwingUtilities.invokeLater(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    logTextArea.append("题干：相同题目，忽略\n");
+//                                    logTextArea.append("————————————————————————————\n");
+//                                }
+//                        });
+//                        return;
+//                    }
                     SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
@@ -198,17 +198,17 @@ public class MainJFrame extends javax.swing.JFrame {
                         }
                     }
                     
-                    if(StringUtils.isBlank(answer)) {
-                        // 未找到答案，忽略
-                        SwingUtilities.invokeLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    logTextArea.append("答案：未找到，忽略\n");
-                                    logTextArea.append("————————————————————————————\n");
-                                }
-                        });
-                        return;
-                    }
+//                    if(StringUtils.isBlank(answer)) {
+//                        // 未找到答案，忽略
+//                        SwingUtilities.invokeLater(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    logTextArea.append("答案：未找到，忽略\n");
+//                                    logTextArea.append("————————————————————————————\n");
+//                                }
+//                        });
+//                        return;
+//                    }
                     final String finalAnswer = answer;
                     SwingUtilities.invokeLater(new Runnable() {
                             @Override
@@ -222,7 +222,8 @@ public class MainJFrame extends javax.swing.JFrame {
                                 logTextArea.setCaretPosition(logTextArea.getText().length());
                                 
                                 // 输入答案
-                                inputAnswer(finalAnswer);
+//                                inputAnswer(finalAnswer);
+                                inputAnswer("Hello!");
                             }
                     });
                 } catch (IOException | AWTException ex) {
@@ -262,7 +263,7 @@ public class MainJFrame extends javax.swing.JFrame {
         robot.delay(500);
 
         // 3 单击确定
-        robot.mouseMove(900, 530);
+        robot.mouseMove(1220, 530);
         robot.mousePress(KeyEvent.BUTTON1_MASK);
         robot.mouseRelease(KeyEvent.BUTTON1_MASK);
         robot.delay(500);
@@ -275,7 +276,8 @@ public class MainJFrame extends javax.swing.JFrame {
     }
     
     private JSONObject captureAndDetect() throws IOException, AWTException {
-        Image image = robot.createScreenCapture(new Rectangle(120, 92, 320, 120));
+//        Image image = robot.createScreenCapture(new Rectangle(120, 92, 320, 120));
+        Image image = robot.createScreenCapture(new Rectangle(120, 84, 336, 60));
         
         ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
         ImageIO.write((RenderedImage) image, "jpg", bos);
@@ -296,8 +298,8 @@ public class MainJFrame extends javax.swing.JFrame {
 //        // 也可以直接通过jvm启动参数设置此环境变量
 //        System.setProperty("aip.log4j.conf", "path/to/your/log4j.properties");
 
-        // 调用接口
-        return client.basicGeneral(file, new HashMap<String, String>());
+        // 调用接口（通用文字识别（高精度版））
+        return client.basicAccurateGeneral(file, new HashMap<String, String>());
     }
 
     /**
