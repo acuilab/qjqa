@@ -172,17 +172,17 @@ public class MainJFrame extends javax.swing.JFrame {
                     }
                     
                     String question = sb.toString();
-//                    if(StringUtils.equals(prevQuestion, question)) {
-//                        // 相同题目，忽略
-//                        SwingUtilities.invokeLater(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    logTextArea.append("题干：相同题目，忽略\n");
-//                                    logTextArea.append("————————————————————————————\n");
-//                                }
-//                        });
-//                        return;
-//                    }
+                    if(StringUtils.equals(prevQuestion, question)) {
+                        // 相同题目，忽略
+                        SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    logTextArea.append("题干：相同题目，忽略\n");
+                                    logTextArea.append("————————————————————————————\n");
+                                }
+                        });
+                        return;
+                    }
                     SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
@@ -202,17 +202,17 @@ public class MainJFrame extends javax.swing.JFrame {
                         }
                     }
                     
-//                    if(StringUtils.isBlank(answer)) {
-//                        // 未找到答案，忽略
-//                        SwingUtilities.invokeLater(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    logTextArea.append("答案：未找到，忽略\n");
-//                                    logTextArea.append("————————————————————————————\n");
-//                                }
-//                        });
-//                        return;
-//                    }
+                    if(StringUtils.isBlank(answer)) {
+                        // 未找到答案，忽略
+                        SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    logTextArea.append("答案：未找到，忽略\n");
+                                    logTextArea.append("————————————————————————————\n");
+                                }
+                        });
+                        return;
+                    }
                     final String finalAnswer = answer;
                     SwingUtilities.invokeLater(new Runnable() {
                             @Override
@@ -226,8 +226,8 @@ public class MainJFrame extends javax.swing.JFrame {
                                 logTextArea.setCaretPosition(logTextArea.getText().length());
                                 
                                 // 输入答案
-//                                inputAnswer(finalAnswer);
-                                inputAnswer("Hello!");
+                                inputAnswer(finalAnswer);
+//                                inputAnswer("Hello!");
                             }
                     });
                 } catch (IOException | AWTException ex) {
