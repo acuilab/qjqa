@@ -209,6 +209,12 @@ public class MainJFrame extends javax.swing.JFrame {
                                 public void run() {
                                     logTextArea.append("答案：未找到，忽略\n");
                                     logTextArea.append("————————————————————————————\n");
+                                    
+                                    // 截图
+                                    robot.mouseMove(1342, 170);
+                                    robot.mousePress(KeyEvent.BUTTON1_MASK);
+                                    robot.mouseRelease(KeyEvent.BUTTON1_MASK);
+                                    robot.delay(500);
                                 }
                         });
                         return;
@@ -277,6 +283,12 @@ public class MainJFrame extends javax.swing.JFrame {
         robot.mousePress(KeyEvent.BUTTON1_MASK);
         robot.mouseRelease(KeyEvent.BUTTON1_MASK);
         robot.delay(500);
+        
+//        // 截图
+//        robot.mouseMove(1342, 170);
+//        robot.mousePress(KeyEvent.BUTTON1_MASK);
+//        robot.mouseRelease(KeyEvent.BUTTON1_MASK);
+//        robot.delay(500);
     }
     
     private JSONObject captureAndDetect() throws IOException, AWTException {
