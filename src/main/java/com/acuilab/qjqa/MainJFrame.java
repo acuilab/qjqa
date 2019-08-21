@@ -19,6 +19,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,7 +47,7 @@ import org.json.JSONObject;
 public class MainJFrame extends javax.swing.JFrame {
     
     private static final int INITIAL_DELAY = 1000;
-    private static final int DELAY = 3000;
+    private static final int DELAY = 2000;
 
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     
@@ -159,6 +160,8 @@ public class MainJFrame extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
+                    
+                    
                     // 捕获图像并识别
                     JSONObject json = captureAndDetect();
                     
@@ -209,12 +212,6 @@ public class MainJFrame extends javax.swing.JFrame {
                                 public void run() {
                                     logTextArea.append("答案：未找到，忽略\n");
                                     logTextArea.append("————————————————————————————\n");
-                                    
-                                    // 截图
-                                    robot.mouseMove(1342, 170);
-                                    robot.mousePress(KeyEvent.BUTTON1_MASK);
-                                    robot.mouseRelease(KeyEvent.BUTTON1_MASK);
-                                    robot.delay(500);
                                 }
                         });
                         return;
@@ -260,9 +257,15 @@ public class MainJFrame extends javax.swing.JFrame {
         robot.mouseMove(150, 540);
         robot.mousePress(KeyEvent.BUTTON1_MASK);
         robot.mouseRelease(KeyEvent.BUTTON1_MASK);
-        robot.delay(500);
+        robot.delay(200);
 
-        // 2 使用剪贴板完成文本输入
+        // 2 发现有时文本粘贴不上，可能是失去了焦点，这里再点击一次
+        robot.mouseMove(150, 530);
+        robot.mousePress(KeyEvent.BUTTON1_MASK);
+        robot.mouseRelease(KeyEvent.BUTTON1_MASK);
+        robot.delay(50);
+        
+        // 3 使用剪贴板完成文本输入
         StringSelection stringSelection = new StringSelection(answer);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, stringSelection);
@@ -270,31 +273,27 @@ public class MainJFrame extends javax.swing.JFrame {
         robot.keyPress(KeyEvent.VK_V);
         robot.keyRelease(KeyEvent.VK_V);
         robot.keyRelease(KeyEvent.VK_CONTROL);
-        robot.delay(500);
+        robot.delay(250);
 
-        // 3 单击确定
+        // 4 单击确定
         robot.mouseMove(1220, 530);
         robot.mousePress(KeyEvent.BUTTON1_MASK);
         robot.mouseRelease(KeyEvent.BUTTON1_MASK);
-        robot.delay(500);
+        robot.delay(250);
 
         // 4 单击发送
         robot.mouseMove(430, 540);
         robot.mousePress(KeyEvent.BUTTON1_MASK);
         robot.mouseRelease(KeyEvent.BUTTON1_MASK);
-        robot.delay(500);
-        
-//        // 截图
-//        robot.mouseMove(1342, 170);
-//        robot.mousePress(KeyEvent.BUTTON1_MASK);
-//        robot.mouseRelease(KeyEvent.BUTTON1_MASK);
-//        robot.delay(500);
+        robot.delay(250);
     }
     
     private JSONObject captureAndDetect() throws IOException, AWTException {
-//        Image image = robot.createScreenCapture(new Rectangle(120, 92, 320, 120));
-        Image image = robot.createScreenCapture(new Rectangle(120, 84, 336, 60));
+        // 先捕获一张图片保存到本地
+        Image imageSaved = robot.createScreenCapture(new Rectangle(76, 32, 412, 486));
+        ImageIO.write((RenderedImage)imageSaved, "png", new File("D:/qj/" + System.currentTimeMillis() + ".png"));
         
+        Image image = robot.createScreenCapture(new Rectangle(120, 84, 336, 60));
         ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
         ImageIO.write((RenderedImage) image, "jpg", bos);
         byte[] file = bos.toByteArray();
