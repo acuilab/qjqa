@@ -47,7 +47,7 @@ import org.json.JSONObject;
 public class MainJFrame extends javax.swing.JFrame {
     
     private static final int INITIAL_DELAY = 1000;
-    private static final int DELAY = 2000;
+    private static final int DELAY = 1500;
 
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     
