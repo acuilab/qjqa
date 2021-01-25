@@ -5,9 +5,6 @@
  */
 package com.acuilab.qjqa;
 
-import static com.acuilab.qjqa.Main.API_KEY;
-import static com.acuilab.qjqa.Main.APP_ID;
-import static com.acuilab.qjqa.Main.SECRET_KEY;
 import com.baidu.aip.ocr.AipOcr;
 import java.awt.AWTException;
 import java.awt.Image;
@@ -40,9 +37,16 @@ import org.json.JSONObject;
  */
 public class ConDragonFrame extends javax.swing.JFrame {
     
+    //设置APPID/AK/SK(百度账号13366345119)
+    public static final String APP_ID = "23578713";
+    public static final String API_KEY = "BoUvNMOOdBAawA3DcSsxTN85";
+    public static final String SECRET_KEY = "PVHDoRKhh6QWGTMvsNV62cBqRhsWoCGV";
+    
     public static final Rectangle RECT_CODE = new Rectangle(746, 587, 94, 38);
     public static final Rectangle RECT_LIFE = new Rectangle(758, 822, 100, 21);
     public static final Rectangle RECT_FAILED = new Rectangle(834, 528, 251, 36);
+    
+    public static final String FIGHT_FAILED_PREFIX = "战";
     
     // 战斗失败确定按钮位置
     public static final int FAILED_OK_X = 961;
@@ -180,7 +184,7 @@ public class ConDragonFrame extends javax.swing.JFrame {
                     // 战斗失败
                     String str = getFailed();
                     System.out.println("failed str=" + str);
-                    if(StringUtils.startsWith(str, "战斗失败")) {
+                    if(StringUtils.startsWith(str, FIGHT_FAILED_PREFIX)) {
                         addLog("战斗失败确定...");
                         // 战斗失败
                         robot.mouseMove(FAILED_OK_X, FAILED_OK_Y);
@@ -315,23 +319,23 @@ public class ConDragonFrame extends javax.swing.JFrame {
         return getWordsResult(json);
     }
     
-    private String getLife() throws IOException, AWTException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
-        
-        // 先捕获一张图片保存到本地
-        Image imageSaved = robot.createScreenCapture(RECT_LIFE);
-        ImageIO.write((RenderedImage)imageSaved, "png", bos);
-        
-        byte[] file = bos.toByteArray();
-        
-        // 初始化一个AipOcr
-        AipOcr client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
-
-        // 调用接口（通用文字识别（高精度版））
-        JSONObject json = client.basicAccurateGeneral(file, new HashMap<>());
-        
-        return getWordsResult(json);
-    }
+//    private String getLife() throws IOException, AWTException {
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+//        
+//        // 先捕获一张图片保存到本地
+//        Image imageSaved = robot.createScreenCapture(RECT_LIFE);
+//        ImageIO.write((RenderedImage)imageSaved, "png", bos);
+//        
+//        byte[] file = bos.toByteArray();
+//        
+//        // 初始化一个AipOcr
+//        AipOcr client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
+//
+//        // 调用接口（通用文字识别（高精度版））
+//        JSONObject json = client.basicGeneral(file, new HashMap<>());
+//        
+//        return getWordsResult(json);
+//    }
     
     private String getFailed() throws IOException, AWTException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
@@ -345,8 +349,8 @@ public class ConDragonFrame extends javax.swing.JFrame {
         // 初始化一个AipOcr
         AipOcr client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
 
-        // 调用接口（通用文字识别（高精度版））
-        JSONObject json = client.basicAccurateGeneral(file, new HashMap<>());
+        // 调用接口（通用文字识别（标准版））
+        JSONObject json = client.basicGeneral(file, new HashMap<>());
         
         return getWordsResult(json);
     }
