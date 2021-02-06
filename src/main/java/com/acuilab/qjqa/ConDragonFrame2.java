@@ -78,8 +78,8 @@ public class ConDragonFrame2 extends javax.swing.JFrame {
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private Robot robot;
     
-    private static final int INITIAL_DELAY = 110*1000;
-    private static final int DELAY = 110*1000;
+    private static final int INITIAL_DELAY = 160*1000;
+    private static final int DELAY = 160*1000;
     private static final int ROBOT_DELAY = 2000;
     
     private static final Random rand = new Random();
@@ -207,8 +207,8 @@ public class ConDragonFrame2 extends javax.swing.JFrame {
 
                     addLog("选择地图...");
                     // 随机选择四幅地图之一
-//                    robot.mouseMove(MAP_X, MAP_Y[rand.nextInt(4)]);
-                    robot.mouseMove(MAP_X, MAP_Y[0]);
+                    robot.mouseMove(MAP_X, MAP_Y[rand.nextInt(4)]);
+//                    robot.mouseMove(MAP_X, MAP_Y[0]);
                     robot.mousePress(KeyEvent.BUTTON1_MASK);
                     robot.mouseRelease(KeyEvent.BUTTON1_MASK);
                     robot.delay(ROBOT_DELAY);
